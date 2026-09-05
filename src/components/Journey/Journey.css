@@ -1,0 +1,779 @@
+.journey {
+  position: relative;
+
+  width: 100%;
+  min-height: 100vh;
+
+  padding: 180px 7vw 140px;
+
+  box-sizing: border-box;
+
+  overflow: hidden;
+  isolation: isolate;
+
+  background: var(--bg-primary);
+}
+
+/* =========================
+   GRID
+========================= */
+
+.journey-grid {
+  position: absolute;
+  inset: 0;
+
+  z-index: -1;
+
+  pointer-events: none;
+
+  background-image:
+    linear-gradient(
+      rgba(255, 255, 255, 0.025) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.025) 1px,
+      transparent 1px
+    );
+
+  background-size: 80px 80px;
+
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 12%,
+    black 88%,
+    transparent
+  );
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.journey-header {
+  position: relative;
+
+  width: min(700px, 100%);
+
+  margin: 0 auto 150px;
+
+  text-align: center;
+
+  z-index: 2;
+}
+
+.journey-label {
+  margin: 0 0 22px;
+
+  color: var(--accent);
+
+  font-size: 10px;
+  font-weight: 600;
+
+  letter-spacing: 0.35em;
+
+  line-height: 1.4;
+}
+
+.journey-header h2 {
+  margin: 0;
+
+  color: var(--text-primary);
+
+  font-size: clamp(46px, 5vw, 76px);
+  font-weight: 700;
+
+  line-height: 0.95;
+
+  letter-spacing: -0.055em;
+}
+
+.journey-intro {
+  max-width: 500px;
+
+  margin: 28px auto 0;
+
+  color: var(--text-secondary);
+
+  font-size: 15px;
+
+  line-height: 1.8;
+}
+
+/* =========================
+   TIMELINE
+========================= */
+
+.journey-timeline {
+  position: relative;
+
+  width: min(1100px, 100%);
+
+  margin: 0 auto;
+
+  padding-bottom: 80px;
+}
+
+/* =========================
+   CENTRAL LINE
+========================= */
+
+.journey-line {
+  position: absolute;
+
+  top: 0;
+  bottom: 0;
+
+  left: 50%;
+
+  width: 1px;
+
+  transform: translateX(-50%);
+
+  background: var(--border-color);
+
+  opacity: 0.7;
+
+  z-index: 1;
+}
+
+.journey-line-progress {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+
+  background: var(--accent);
+
+  box-shadow:
+    0 0 12px var(--accent),
+    0 0 30px rgba(255, 255, 255, 0.08);
+
+  transition: height 0.5s
+    cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* =========================
+   STEP
+========================= */
+
+.journey-step {
+  position: relative;
+
+  min-height: 440px;
+
+  display: flex;
+  align-items: center;
+
+  box-sizing: border-box;
+
+  z-index: 2;
+}
+
+/* =========================
+   CARD POSITION
+========================= */
+
+.journey-step-right {
+  justify-content: flex-start;
+
+  padding-right: calc(50% + 70px);
+}
+
+.journey-step-left {
+  justify-content: flex-end;
+
+  padding-left: calc(50% + 70px);
+}
+
+/* =========================
+   DOT
+========================= */
+
+.journey-dot {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  width: 16px;
+  height: 16px;
+
+  transform: translate(-50%, -50%);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid var(--border-color);
+
+  border-radius: 50%;
+
+  background: var(--bg-primary);
+
+  z-index: 5;
+
+  transition:
+    width 0.4s ease,
+    height 0.4s ease,
+    border-color 0.4s ease,
+    box-shadow 0.4s ease;
+}
+
+.journey-dot span {
+  width: 4px;
+  height: 4px;
+
+  border-radius: 50%;
+
+  background: var(--text-secondary);
+
+  transition:
+    width 0.4s ease,
+    height 0.4s ease,
+    background 0.4s ease;
+}
+
+/* ACTIVE DOT */
+
+.journey-step.active .journey-dot {
+  width: 24px;
+  height: 24px;
+
+  border-color: var(--accent);
+
+  box-shadow:
+    0 0 0 6px
+      color-mix(
+        in srgb,
+        var(--accent) 8%,
+        transparent
+      ),
+    0 0 25px
+      color-mix(
+        in srgb,
+        var(--accent) 35%,
+        transparent
+      );
+}
+
+.journey-step.active .journey-dot span {
+  width: 8px;
+  height: 8px;
+
+  background: var(--accent);
+}
+
+/* =========================
+   YEAR
+========================= */
+
+.journey-year {
+  position: absolute;
+
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  color: var(--text-secondary);
+
+  font-size: 11px;
+  font-weight: 600;
+
+  letter-spacing: 0.18em;
+
+  opacity: 0.45;
+
+  transition:
+    color 0.4s ease,
+    opacity 0.4s ease,
+    transform 0.5s ease;
+}
+
+.journey-step-right .journey-year {
+  left: calc(50% + 38px);
+}
+
+.journey-step-left .journey-year {
+  right: calc(50% + 38px);
+}
+
+.journey-step.active .journey-year {
+  color: var(--accent);
+
+  opacity: 1;
+
+  transform:
+    translateY(-50%)
+    scale(1.05);
+}
+
+/* =========================
+   CARD
+========================= */
+
+.journey-card {
+  position: relative;
+
+  width: min(440px, 100%);
+
+  padding: 34px;
+
+  box-sizing: border-box;
+
+  border: 1px solid var(--border-color);
+
+  border-radius: 24px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.055),
+      rgba(255, 255, 255, 0.015)
+    );
+
+  backdrop-filter: blur(14px);
+
+  box-shadow:
+    0 20px 70px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.05);
+
+  opacity: 0.35;
+
+  transform: translateY(35px);
+
+  transition:
+    opacity 0.7s ease,
+    transform 0.8s
+      cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.5s ease,
+    box-shadow 0.5s ease;
+}
+
+/* RIGHT */
+
+.journey-step-right .journey-card {
+  transform:
+    translateX(-50px)
+    translateY(35px);
+}
+
+/* LEFT */
+
+.journey-step-left .journey-card {
+  transform:
+    translateX(50px)
+    translateY(35px);
+}
+
+/* ACTIVE CARD */
+
+.journey-step.active .journey-card {
+  opacity: 1;
+
+  transform:
+    translateX(0)
+    translateY(0);
+
+  border-color:
+    color-mix(
+      in srgb,
+      var(--accent) 45%,
+      var(--border-color)
+    );
+
+  box-shadow:
+    0 25px 80px rgba(0, 0, 0, 0.2),
+    0 0 45px
+      color-mix(
+        in srgb,
+        var(--accent) 7%,
+        transparent
+      ),
+    inset 0 1px 0
+      rgba(255, 255, 255, 0.08);
+}
+
+/* =========================
+   CARD CONTENT
+========================= */
+
+.journey-card-label {
+  margin: 0 0 14px;
+
+  color: var(--accent);
+
+  font-size: 9px;
+  font-weight: 600;
+
+  letter-spacing: 0.28em;
+
+  line-height: 1.5;
+}
+
+.journey-card h3 {
+  margin: 0 0 18px;
+
+  color: var(--text-primary);
+
+  font-size: clamp(28px, 3vw, 42px);
+  font-weight: 700;
+
+  line-height: 1;
+
+  letter-spacing: -0.04em;
+}
+
+.journey-card-description {
+  max-width: 390px;
+
+  margin: 0;
+
+  color: var(--text-secondary);
+
+  font-size: 14px;
+
+  line-height: 1.8;
+}
+
+/* =========================
+   CARD NUMBER
+========================= */
+
+.journey-number {
+  position: absolute;
+
+  right: 24px;
+  bottom: 20px;
+
+  color: var(--text-secondary);
+
+  font-size: 9px;
+  font-weight: 600;
+
+  letter-spacing: 0.15em;
+
+  opacity: 0.25;
+}
+
+[dir="rtl"] .journey-number {
+  right: auto;
+  left: 24px;
+}
+
+/* =========================
+   PROGRESS
+========================= */
+
+.journey-progress {
+  position: fixed;
+
+  right: 28px;
+  bottom: 32px;
+
+  z-index: 20;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  color: var(--text-secondary);
+
+  font-size: 9px;
+  font-weight: 600;
+
+  letter-spacing: 0.12em;
+
+  pointer-events: none;
+
+  opacity: 0.7;
+}
+
+.journey-progress span:first-child {
+  color: var(--accent);
+}
+
+.journey-progress-divider {
+  width: 24px;
+  height: 1px;
+
+  background: var(--border-color);
+}
+
+[dir="rtl"] .journey-progress {
+  right: auto;
+  left: 28px;
+}
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 900px) {
+  .journey {
+    padding: 140px 6vw 100px;
+  }
+
+  .journey-header {
+    margin-bottom: 100px;
+  }
+
+  .journey-header h2 {
+    font-size: clamp(42px, 8vw, 62px);
+  }
+
+  .journey-intro {
+    font-size: 13px;
+  }
+
+  .journey-timeline {
+    width: 100%;
+  }
+
+  .journey-step {
+    min-height: 400px;
+  }
+
+  .journey-step-right {
+    padding-right: calc(50% + 45px);
+  }
+
+  .journey-step-left {
+    padding-left: calc(50% + 45px);
+  }
+
+  .journey-card {
+    padding: 28px;
+  }
+
+  .journey-card h3 {
+    font-size: clamp(25px, 4vw, 36px);
+  }
+
+  .journey-card-description {
+    font-size: 13px;
+  }
+
+  .journey-step-right .journey-year {
+    left: calc(50% + 25px);
+  }
+
+  .journey-step-left .journey-year {
+    right: calc(50% + 25px);
+  }
+
+  .journey-progress {
+    right: 18px;
+  }
+
+  [dir="rtl"] .journey-progress {
+    right: auto;
+    left: 18px;
+  }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+  .journey {
+    min-height: auto;
+
+    padding:
+      110px
+      24px
+      90px;
+  }
+
+  .journey-header {
+    margin-bottom: 70px;
+  }
+
+  .journey-label {
+    margin-bottom: 16px;
+
+    font-size: 8px;
+  }
+
+  .journey-header h2 {
+    font-size: clamp(34px, 10vw, 48px);
+
+    line-height: 0.98;
+  }
+
+  .journey-intro {
+    margin-top: 20px;
+
+    font-size: 12px;
+    line-height: 1.7;
+  }
+
+  /* =========================
+     MOBILE LINE
+  ========================= */
+
+  .journey-line {
+    left: 14px;
+
+    transform: none;
+  }
+
+  /* =========================
+     MOBILE STEP
+  ========================= */
+
+  .journey-step,
+  .journey-step-right,
+  .journey-step-left {
+    min-height: 360px;
+
+    display: block;
+
+    padding:
+      40px
+      0
+      40px
+      48px;
+  }
+
+  /* =========================
+     MOBILE DOT
+  ========================= */
+
+  .journey-dot {
+    top: 50%;
+    left: 14px;
+  }
+
+  /* =========================
+     MOBILE YEAR
+  ========================= */
+
+  .journey-year,
+  .journey-step-right .journey-year,
+  .journey-step-left .journey-year {
+    position: relative;
+
+    top: auto;
+    left: auto;
+    right: auto;
+
+    display: inline-block;
+
+    margin-bottom: 14px;
+
+    transform: none;
+  }
+
+  .journey-step.active .journey-year {
+    transform: scale(1.05);
+  }
+
+  /* =========================
+     MOBILE CARD
+  ========================= */
+
+  .journey-card,
+  .journey-step-right .journey-card,
+  .journey-step-left .journey-card {
+    width: 100%;
+
+    padding: 24px;
+
+    transform:
+      translateY(35px);
+  }
+
+  .journey-step.active .journey-card {
+    transform:
+      translateY(0);
+  }
+
+  .journey-card-label {
+    margin-bottom: 10px;
+
+    font-size: 8px;
+  }
+
+  .journey-card h3 {
+    margin-bottom: 14px;
+
+    font-size: clamp(24px, 7vw, 34px);
+  }
+
+  .journey-card-description {
+    font-size: 12px;
+
+    line-height: 1.7;
+  }
+
+  .journey-number {
+    right: 18px;
+    bottom: 16px;
+  }
+
+  /* =========================
+     RTL MOBILE
+  ========================= */
+
+  [dir="rtl"] .journey-line {
+    left: auto;
+    right: 14px;
+  }
+
+  [dir="rtl"]
+    .journey-step,
+  [dir="rtl"]
+    .journey-step-right,
+  [dir="rtl"]
+    .journey-step-left {
+    padding:
+      40px
+      48px
+      40px
+      0;
+  }
+
+  [dir="rtl"] .journey-dot {
+    left: auto;
+    right: 14px;
+  }
+
+  [dir="rtl"] .journey-year,
+  [dir="rtl"]
+    .journey-step-right
+    .journey-year,
+  [dir="rtl"]
+    .journey-step-left
+    .journey-year {
+    left: auto;
+    right: auto;
+  }
+
+  [dir="rtl"] .journey-card {
+    text-align: right;
+  }
+
+  [dir="rtl"] .journey-number {
+    right: auto;
+    left: 18px;
+  }
+
+  .journey-progress {
+    right: 12px;
+    bottom: 18px;
+
+    font-size: 7px;
+  }
+
+  [dir="rtl"] .journey-progress {
+    right: auto;
+    left: 12px;
+  }
+}
