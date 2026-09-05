@@ -1,13 +1,6 @@
 import { Suspense, useEffect, useRef } from "react";
-import {
-  Canvas,
-  useFrame,
-  useThree,
-} from "@react-three/fiber";
-import {
-  Environment,
-  useGLTF,
-} from "@react-three/drei";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
+import { Environment, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 
 /* =========================
@@ -37,8 +30,9 @@ function Character({ activeStep = 0 }) {
 
   const { camera } = useThree();
 
-  const { scene, animations } =
-    useGLTF("/models/character.glb");
+  const { scene, animations } = useGLTF(
+    `${import.meta.env.BASE_URL}models/character.glb`,
+  );
 
   /* =========================
      CAMERA POSITION
@@ -47,17 +41,9 @@ function Character({ activeStep = 0 }) {
   useEffect(() => {
     if (!scene) return;
 
-    camera.position.set(
-      0,
-      6.2,
-      30
-    );
+    camera.position.set(0, 6.2, 30);
 
-    camera.lookAt(
-      0,
-      5.2,
-      0
-    );
+    camera.lookAt(0, 5.2, 0);
 
     camera.updateProjectionMatrix();
   }, [scene, camera]);
@@ -84,9 +70,7 @@ function Character({ activeStep = 0 }) {
       },
     ];
 
-    const target =
-      rotations[activeStep] ||
-      rotations[0];
+    const target = rotations[activeStep] || rotations[0];
 
     stepTargetRef.current = target;
   }, [activeStep]);
@@ -103,11 +87,9 @@ function Character({ activeStep = 0 }) {
       scene.getObjectByName("spine006") ||
       null;
 
-    const footR =
-      scene.getObjectByName("footR");
+    const footR = scene.getObjectByName("footR");
 
-    const footL =
-      scene.getObjectByName("footL");
+    const footL = scene.getObjectByName("footL");
 
     if (footR) {
       footR.position.y = 3.36;
@@ -123,37 +105,26 @@ function Character({ activeStep = 0 }) {
   ========================= */
 
   useEffect(() => {
-    if (
-      !scene ||
-      !animations ||
-      !animations.length
-    ) {
+    if (!scene || !animations || !animations.length) {
       return;
     }
 
-    const mixer =
-      new THREE.AnimationMixer(scene);
+    const mixer = new THREE.AnimationMixer(scene);
 
     mixerRef.current = mixer;
 
     animations.forEach((clip) => {
-      actionsRef.current[clip.name] =
-        mixer.clipAction(clip);
+      actionsRef.current[clip.name] = mixer.clipAction(clip);
     });
 
-    const intro =
-      actionsRef.current.introAnimation;
+    const intro = actionsRef.current.introAnimation;
 
-    const typing =
-      actionsRef.current.typing;
+    const typing = actionsRef.current.typing;
 
     if (intro) {
       intro.reset();
 
-      intro.setLoop(
-        THREE.LoopOnce,
-        1
-      );
+      intro.setLoop(THREE.LoopOnce, 1);
 
       intro.clampWhenFinished = true;
 
@@ -167,10 +138,7 @@ function Character({ activeStep = 0 }) {
         if (typing) {
           typing.reset();
 
-          typing.setLoop(
-            THREE.LoopRepeat,
-            Infinity
-          );
+          typing.setLoop(THREE.LoopRepeat, Infinity);
 
           typing.fadeIn(0.5);
 
@@ -178,16 +146,10 @@ function Character({ activeStep = 0 }) {
         }
       };
 
-      mixer.addEventListener(
-        "finished",
-        handleFinished
-      );
+      mixer.addEventListener("finished", handleFinished);
 
       return () => {
-        mixer.removeEventListener(
-          "finished",
-          handleFinished
-        );
+        mixer.removeEventListener("finished", handleFinished);
 
         mixer.stopAllAction();
         mixer.uncacheRoot(scene);
@@ -197,10 +159,7 @@ function Character({ activeStep = 0 }) {
     if (typing) {
       typing.reset();
 
-      typing.setLoop(
-        THREE.LoopRepeat,
-        Infinity
-      );
+      typing.setLoop(THREE.LoopRepeat, Infinity);
 
       typing.play();
     }
@@ -217,29 +176,15 @@ function Character({ activeStep = 0 }) {
 
   useEffect(() => {
     const handleMouseMove = (event) => {
-      mouseRef.current.x =
-        (event.clientX /
-          window.innerWidth) *
-          2 -
-        1;
+      mouseRef.current.x = (event.clientX / window.innerWidth) * 2 - 1;
 
-      mouseRef.current.y =
-        -(event.clientY /
-          window.innerHeight) *
-          2 +
-        1;
+      mouseRef.current.y = -(event.clientY / window.innerHeight) * 2 + 1;
     };
 
-    window.addEventListener(
-      "mousemove",
-      handleMouseMove
-    );
+    window.addEventListener("mousemove", handleMouseMove);
 
     return () => {
-      window.removeEventListener(
-        "mousemove",
-        handleMouseMove
-      );
+      window.removeEventListener("mousemove", handleMouseMove);
     };
   }, []);
 
@@ -256,38 +201,30 @@ function Character({ activeStep = 0 }) {
       mixerRef.current.update(delta);
     }
 
-    const mouseX =
-      mouseRef.current.x;
+    const mouseX = mouseRef.current.x;
 
-    const mouseY =
-      mouseRef.current.y;
+    const mouseY = mouseRef.current.y;
 
     /* =========================
        HEAD
     ========================= */
 
     if (headRef.current) {
-      const targetY =
-        stepTargetRef.current.y +
-        mouseX * 0.18;
+      const targetY = stepTargetRef.current.y + mouseX * 0.18;
 
-      const targetX =
-        stepTargetRef.current.x -
-        mouseY * 0.10;
+      const targetX = stepTargetRef.current.x - mouseY * 0.1;
 
-      headRef.current.rotation.y =
-        THREE.MathUtils.lerp(
-          headRef.current.rotation.y,
-          targetY,
-          0.06
-        );
+      headRef.current.rotation.y = THREE.MathUtils.lerp(
+        headRef.current.rotation.y,
+        targetY,
+        0.06,
+      );
 
-      headRef.current.rotation.x =
-        THREE.MathUtils.lerp(
-          headRef.current.rotation.x,
-          targetX,
-          0.06
-        );
+      headRef.current.rotation.x = THREE.MathUtils.lerp(
+        headRef.current.rotation.x,
+        targetX,
+        0.06,
+      );
     }
 
     /* =========================
@@ -295,20 +232,15 @@ function Character({ activeStep = 0 }) {
     ========================= */
 
     if (groupRef.current) {
-      const time =
-        state.clock.elapsedTime;
+      const time = state.clock.elapsedTime;
 
-      const targetRotation =
-        mouseX * 0.05 +
-        Math.sin(time * 0.8) *
-          0.01;
+      const targetRotation = mouseX * 0.05 + Math.sin(time * 0.8) * 0.01;
 
-      groupRef.current.rotation.y =
-        THREE.MathUtils.lerp(
-          groupRef.current.rotation.y,
-          targetRotation,
-          0.04
-        );
+      groupRef.current.rotation.y = THREE.MathUtils.lerp(
+        groupRef.current.rotation.y,
+        targetRotation,
+        0.04,
+      );
     }
   });
 
@@ -317,11 +249,7 @@ function Character({ activeStep = 0 }) {
   ========================= */
 
   return (
-    <group
-      ref={groupRef}
-      position={[0, -2.2, 0]}
-      scale={0.85}
-    >
+    <group ref={groupRef} position={[0, -2.2, 0]} scale={0.85}>
       <primitive object={scene} />
     </group>
   );
@@ -345,26 +273,16 @@ function Avatar({ activeStep = 0 }) {
         gl={{
           antialias: true,
           alpha: true,
-          powerPreference:
-            "high-performance",
+          powerPreference: "high-performance",
         }}
       >
         {/* =========================
             LIGHTING
         ========================= */}
 
-        <ambientLight
-          intensity={0.15}
-        />
+        <ambientLight intensity={0.15} />
 
-        <directionalLight
-          position={[
-            -0.47,
-            -0.32,
-            -1,
-          ]}
-          intensity={1}
-        />
+        <directionalLight position={[-0.47, -0.32, -1]} intensity={1} />
 
         {/* =========================
             ENVIRONMENT
@@ -372,13 +290,11 @@ function Avatar({ activeStep = 0 }) {
 
         <Suspense fallback={null}>
           <Environment
-            files="/models/char_enviorment.hdr"
+            files={`${import.meta.env.BASE_URL}models/char_enviorment.hdr`}
             environmentIntensity={0.64}
           />
 
-          <Character
-            activeStep={activeStep}
-          />
+          <Character activeStep={activeStep} />
         </Suspense>
       </Canvas>
     </div>
@@ -389,8 +305,6 @@ function Avatar({ activeStep = 0 }) {
    PRELOAD
 ========================= */
 
-useGLTF.preload(
-  "/models/character.glb"
-);
+useGLTF.preload(`${import.meta.env.BASE_URL}models/character.glb`);
 
 export default Avatar;

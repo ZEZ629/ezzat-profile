@@ -8,11 +8,11 @@ import "./Projects.css";
 gsap.registerPlugin(ScrollTrigger);
 
 const projectImages = [
-  "/projects/nexa-dashboard.jpg",
-  "/projects/secure-auth.jpg",
-  "/projects/network-flow.jpg",
-  "/projects/taskora.jpg",
-  "/projects/devconnect.jpg",
+  `${import.meta.env.BASE_URL}projects/nexa-dashboard.jpg`,
+  `${import.meta.env.BASE_URL}projects/secure-auth.jpg`,
+  `${import.meta.env.BASE_URL}projects/network-flow.jpg`,
+  `${import.meta.env.BASE_URL}projects/taskora.jpg`,
+  `${import.meta.env.BASE_URL}projects/devconnect.jpg`,
 ];
 
 function Projects() {
@@ -105,6 +105,7 @@ function Projects() {
             >
               <div className="project-card">
                 {/* IMAGE */}
+
                 <div className="project-image">
                   <img
                     src={projectImages[index]}
@@ -118,6 +119,7 @@ function Projects() {
                 </div>
 
                 {/* CONTENT */}
+
                 <div className="project-content">
                   <div className="project-main-info">
                     <span className="project-category">{project.category}</span>
