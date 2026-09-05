@@ -104,6 +104,14 @@ const en = {
       },
     ],
   },
+  skills: {
+    label: "SKILLS",
+    title: "Tools I use.",
+    titleAccent: "Things I build with.",
+    description: "Technologies, tools and systems",
+    descriptionSecond: "I use to turn ideas into real products.",
+    hint: "MOVE YOUR MOUSE",
+  },
   journey: {
     label: "MY JOURNEY",
     title: "Every step builds the bigger picture.",

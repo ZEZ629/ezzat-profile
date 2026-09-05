@@ -6,12 +6,10 @@ import Journey from "./components/Journey/Journey";
 import Services from "./components/Services/Services";
 import Projects from "./components/Projects/Projects";
 import Contact from "./components/Contact/Contact";
-
 function App() {
   return (
     <>
       <Navbar />
-
       <main>
         <Hero />
         <About />

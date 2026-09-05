@@ -34,6 +34,7 @@ import {
   FaServer,
 } from "react-icons/fa6";
 
+import useTranslation from "../../locales/useTranslation";
 import "./Skills.css";
 
 const skills = [
@@ -193,6 +194,8 @@ function Skills() {
   const sceneRef = useRef(null);
   const pillRefs = useRef([]);
 
+  const t = useTranslation();
+
   useEffect(() => {
     const scene = sceneRef.current;
 
@@ -218,24 +221,35 @@ function Skills() {
 
     const bodies = [];
 
+    /* =========================
+       PILL SIZE
+    ========================= */
+
     const getPillSize = (skill) => {
       const baseWidth = skill.name.length * 8.5 + 72;
 
       return {
         width: Math.max(125, Math.min(baseWidth, 230)),
+
         height: skill.name.length > 17 ? 62 : 52,
       };
     };
+
+    /* =========================
+       CREATE BODY
+    ========================= */
 
     const createSkillBody = (skill, index) => {
       const { width, height } = getPillSize(skill);
 
       const centerX = scene.clientWidth / 2;
+
       const centerY = scene.clientHeight / 2;
 
       const angle = (((index * 31) % 28) - 14) * (Math.PI / 180);
 
       const radiusX = scene.clientWidth * 0.34;
+
       const radiusY = scene.clientHeight * 0.32;
 
       const x = centerX + Math.cos(index * 1.45) * radiusX;
@@ -247,10 +261,12 @@ function Skills() {
           width / 2 + 10,
           Math.min(x, scene.clientWidth - width / 2 - 10),
         ),
+
         Math.max(
           height / 2 + 10,
           Math.min(y, scene.clientHeight - height / 2 - 10),
         ),
+
         width,
         height,
         {
@@ -271,6 +287,7 @@ function Skills() {
 
       Body.setVelocity(body, {
         x: (Math.random() - 0.5) * 0.7,
+
         y: (Math.random() - 0.5) * 0.7,
       });
 
@@ -279,10 +296,15 @@ function Skills() {
 
     skills.forEach(createSkillBody);
 
+    /* =========================
+       WALLS
+    ========================= */
+
     const wallSize = 120;
 
     const createWalls = () => {
       const width = scene.clientWidth;
+
       const height = scene.clientHeight;
 
       return [
@@ -308,11 +330,28 @@ function Skills() {
 
     Composite.add(world, [...bodies, ...walls]);
 
-    /*
-     * Mouse
-     */
+    /* =========================
+       MOUSE
+    ========================= */
 
     const mouse = Mouse.create(scene);
+
+    /*
+     * Matter.js can attach wheel
+     * listeners to the mouse element.
+     *
+     * Remove them so the browser /
+     * Lenis keeps full control of
+     * page scrolling.
+     */
+
+    const mouseWheelHandler = mouse.mousewheel;
+
+    if (mouseWheelHandler) {
+      scene.removeEventListener("wheel", mouseWheelHandler);
+
+      scene.removeEventListener("mousewheel", mouseWheelHandler);
+    }
 
     const mouseConstraint = MouseConstraint.create(engine, {
       mouse,
@@ -329,14 +368,14 @@ function Skills() {
 
     Composite.add(world, mouseConstraint);
 
-    /*
-     * Mouse impact / repulsion
-     */
+    /* =========================
+       MOUSE IMPACT
+    ========================= */
 
     const mouseRadius = 190;
     const mouseForce = 0.045;
 
-    Events.on(engine, "beforeUpdate", () => {
+    const handleBeforeUpdate = () => {
       const mousePosition = mouse.position;
 
       bodies.forEach((body) => {
@@ -351,22 +390,26 @@ function Skills() {
         }
 
         const normalizedX = dx / distance;
+
         const normalizedY = dy / distance;
 
         const strength = ((mouseRadius - distance) / mouseRadius) * mouseForce;
 
         Body.applyForce(body, body.position, {
           x: normalizedX * strength,
+
           y: normalizedY * strength,
         });
       });
-    });
+    };
 
-    /*
-     * Limit speed
-     */
+    Events.on(engine, "beforeUpdate", handleBeforeUpdate);
 
-    Events.on(engine, "afterUpdate", () => {
+    /* =========================
+       LIMIT SPEED
+    ========================= */
+
+    const handleAfterUpdate = () => {
       bodies.forEach((body) => {
         const maxVelocity = 5;
 
@@ -385,11 +428,13 @@ function Skills() {
           y: velocityY,
         });
       });
-    });
+    };
 
-    /*
-     * Render
-     */
+    Events.on(engine, "afterUpdate", handleAfterUpdate);
+
+    /* =========================
+       RENDER
+    ========================= */
 
     const render = () => {
       bodies.forEach((body, index) => {
@@ -398,27 +443,29 @@ function Skills() {
         if (!element) return;
 
         const width = element.offsetWidth;
+
         const height = element.offsetHeight;
 
         element.style.transform = `
-          translate3d(
-            ${body.position.x - width / 2}px,
-            ${body.position.y - height / 2}px,
-            0
-          )
-          rotate(${body.angle}rad)
-        `;
+            translate3d(
+              ${body.position.x - width / 2}px,
+              ${body.position.y - height / 2}px,
+              0
+            )
+            rotate(${body.angle}rad)
+          `;
       });
     };
 
     Events.on(engine, "afterUpdate", render);
 
-    /*
-     * Resize
-     */
+    /* =========================
+       RESIZE
+    ========================= */
 
     const handleResize = () => {
       const width = scene.clientWidth;
+
       const height = scene.clientHeight;
 
       Composite.remove(world, walls);
@@ -448,9 +495,9 @@ function Skills() {
 
     window.addEventListener("resize", handleResize);
 
-    /*
-     * Start
-     */
+    /* =========================
+       START
+    ========================= */
 
     const runner = Runner.create();
 
@@ -458,22 +505,30 @@ function Skills() {
 
     render();
 
-    /*
-     * Cleanup
-     */
+    /* =========================
+       CLEANUP
+    ========================= */
 
     return () => {
       window.removeEventListener("resize", handleResize);
 
       Runner.stop(runner);
 
-      Events.off(engine, "beforeUpdate");
-      Events.off(engine, "afterUpdate");
+      Events.off(engine, "beforeUpdate", handleBeforeUpdate);
+
+      Events.off(engine, "afterUpdate", handleAfterUpdate);
+
+      Events.off(engine, "afterUpdate", render);
 
       Composite.clear(world, false);
+
       Engine.clear(engine);
     };
   }, []);
+
+  /* =========================
+     UI
+  ========================= */
 
   return (
     <section className="skills" id="skills">
@@ -481,18 +536,23 @@ function Skills() {
 
       <div className="skills-header">
         <div className="skills-label">
-          <span>SKILLS</span>
+          <span>{t.skills.label}</span>
+
           <i />
         </div>
 
         <h2>
-          Tools I use.
-          <span>Things I build with.</span>
+          {t.skills.title}
+
+          <span>{t.skills.titleAccent}</span>
         </h2>
 
         <p>
-          Technologies, tools and systems
-          <br />I use to turn ideas into real products.
+          {t.skills.description}
+
+          <br />
+
+          {t.skills.descriptionSecond}
         </p>
       </div>
 
@@ -523,7 +583,7 @@ function Skills() {
         </div>
       </div>
 
-      <div className="skills-hint">MOVE YOUR MOUSE</div>
+      <div className="skills-hint">{t.skills.hint}</div>
     </section>
   );
 }
