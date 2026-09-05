@@ -14,8 +14,11 @@
   color: #fff;
 
   overflow: clip;
-}
 
+  transition:
+    background 0.6s ease,
+    color 0.6s ease;
+}
 
 /* =========================================================
    BACKGROUND GRID
@@ -31,19 +34,13 @@
   opacity: 0.18;
 
   background-image:
-    linear-gradient(
-      rgba(255, 255, 255, 0.045) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0.045) 1px,
-      transparent 1px
-    );
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
 
   background-size: 80px 80px;
-}
 
+  transition: background-image 0.6s ease;
+}
 
 /* =========================================================
    HEADER
@@ -57,14 +54,10 @@
 
   z-index: 10;
 
-  width: min(
-    650px,
-    calc(100vw - 92px)
-  );
+  width: min(650px, calc(100vw - 92px));
 
   pointer-events: none;
 }
-
 
 /* =========================================================
    LABEL
@@ -86,13 +79,7 @@
   width: 28px;
   height: 1px;
 
-  background:
-    rgba(
-      255,
-      255,
-      255,
-      0.8
-    );
+  background: rgba(255, 255, 255, 0.8);
 }
 
 .services-label span {
@@ -105,7 +92,6 @@
   text-transform: uppercase;
 }
 
-
 /* =========================================================
    TITLE
 ========================================================= */
@@ -113,12 +99,7 @@
 .services-header h2 {
   margin: 0;
 
-  font-size:
-    clamp(
-      56px,
-      7vw,
-      100px
-    );
+  font-size: clamp(56px, 7vw, 100px);
 
   line-height: 0.95;
 
@@ -127,16 +108,12 @@
   letter-spacing: -0.055em;
 }
 
-
 /* =========================================================
    DESCRIPTION
 ========================================================= */
 
 .services-header p {
-  width: min(
-    570px,
-    100%
-  );
+  width: min(570px, 100%);
 
   margin: 24px 0 0;
 
@@ -144,15 +121,8 @@
 
   line-height: 1.65;
 
-  color:
-    rgba(
-      255,
-      255,
-      255,
-      0.82
-    );
+  color: rgba(255, 255, 255, 0.82);
 }
-
 
 /* =========================================================
    STICKY
@@ -168,7 +138,6 @@
 
   overflow: hidden;
 }
-
 
 /* =========================================================
    TRACK
@@ -197,7 +166,6 @@
   will-change: transform;
 }
 
-
 /* =========================================================
    SERVICE CARD
 ========================================================= */
@@ -215,26 +183,14 @@
 
   overflow: hidden;
 
-  border:
-    1px solid
-    rgba(
-      255,
-      255,
-      255,
-      0.18
-    );
+  border: 1px solid rgba(255, 255, 255, 0.18);
 
   border-radius: 28px;
 
   background:
     radial-gradient(
       circle at 100% 0%,
-      rgba(
-        55,
-        60,
-        110,
-        0.22
-      ),
+      rgba(55, 60, 110, 0.22),
       transparent 45%
     ),
     #050505;
@@ -245,15 +201,8 @@
 }
 
 .service-card:hover {
-  border-color:
-    rgba(
-      255,
-      255,
-      255,
-      0.35
-    );
+  border-color: rgba(255, 255, 255, 0.35);
 }
-
 
 /* =========================================================
    CARD NUMBER
@@ -274,7 +223,6 @@
   color: #fff;
 }
 
-
 /* =========================================================
    SERVICE ICON
 ========================================================= */
@@ -293,54 +241,22 @@
   align-items: center;
   justify-content: center;
 
-  transform:
-    translateY(-50%);
+  transform: translateY(-50%);
 
-  border:
-    1px solid
-    rgba(
-      255,
-      255,
-      255,
-      0.08
-    );
+  border: 1px solid rgba(255, 255, 255, 0.08);
 
   border-radius: 50%;
 
-  background:
-    radial-gradient(
-      circle,
-      rgba(
-        255,
-        255,
-        255,
-        0.09
-      ),
-      rgba(
-        255,
-        255,
-        255,
-        0.025
-      ) 55%,
-      transparent 72%
-    );
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.09),
+    rgba(255, 255, 255, 0.025) 55%,
+    transparent 72%
+  );
 
-  box-shadow:
-    0 0 80px
-    rgba(
-      255,
-      255,
-      255,
-      0.04
-    );
+  box-shadow: 0 0 80px rgba(255, 255, 255, 0.04);
 
-  color:
-    rgba(
-      255,
-      255,
-      255,
-      0.86
-    );
+  color: rgba(255, 255, 255, 0.86);
 
   pointer-events: none;
 
@@ -350,54 +266,33 @@
     background 0.5s ease;
 }
 
-
 /* Icon itself */
 
 .service-card-visual svg {
   width: 82px;
   height: 82px;
 
-  transition:
-    transform 0.5s ease;
+  transition: transform 0.5s ease;
 }
-
 
 /* Hover */
 
-.service-card:hover
-.service-card-visual {
-  transform:
-    translateY(-50%)
-    scale(1.08);
+.service-card:hover .service-card-visual {
+  transform: translateY(-50%) scale(1.08);
 
   color: #fff;
 
-  background:
-    radial-gradient(
-      circle,
-      rgba(
-        255,
-        255,
-        255,
-        0.14
-      ),
-      rgba(
-        255,
-        255,
-        255,
-        0.035
-      ) 55%,
-      transparent 72%
-    );
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.14),
+    rgba(255, 255, 255, 0.035) 55%,
+    transparent 72%
+  );
 }
 
-.service-card:hover
-.service-card-visual svg {
-  transform:
-    rotate(-8deg)
-    scale(1.05);
+.service-card:hover .service-card-visual svg {
+  transform: rotate(-8deg) scale(1.05);
 }
-
 
 /* =========================================================
    CARD CONTENT
@@ -419,12 +314,7 @@
 
   margin: 0 0 20px;
 
-  font-size:
-    clamp(
-      36px,
-      4vw,
-      54px
-    );
+  font-size: clamp(36px, 4vw, 54px);
 
   line-height: 0.98;
 
@@ -442,15 +332,8 @@
 
   line-height: 1.65;
 
-  color:
-    rgba(
-      255,
-      255,
-      255,
-      0.82
-    );
+  color: rgba(255, 255, 255, 0.82);
 }
-
 
 /* =========================================================
    CARD ARROW
@@ -472,41 +355,28 @@
 
   z-index: 3;
 
-  border:
-    1px solid
-    rgba(
-      255,
-      255,
-      255,
-      0.18
-    );
+  border: 1px solid rgba(255, 255, 255, 0.18);
 
   border-radius: 50%;
 
   font-size: 20px;
 
-  color:
-    rgba(
-      255,
-      255,
-      255,
-      0.9
-    );
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .service-card-arrow span {
   display: block;
 
-  transition:
-    transform 0.3s ease;
+  transition: transform 0.3s ease;
 }
 
-.service-card:hover
-.service-card-arrow span {
-  transform:
-    translateX(4px);
+.service-card:hover .service-card-arrow {
+  border-color: rgba(255, 255, 255, 0.35);
 }
 
+.service-card:hover .service-card-arrow span {
+  transform: translateX(4px);
+}
 
 /* =========================================================
    CARD INDEX
@@ -524,15 +394,8 @@
 
   letter-spacing: 0.12em;
 
-  color:
-    rgba(
-      255,
-      255,
-      255,
-      0.18
-    );
+  color: rgba(255, 255, 255, 0.18);
 }
-
 
 /* =========================================================
    ARABIC
@@ -544,7 +407,6 @@
   text-align: right;
 }
 
-
 /* Number */
 
 [dir="rtl"] .service-number {
@@ -553,7 +415,6 @@
   right: 42px;
 }
 
-
 /* Icon */
 
 [dir="rtl"] .service-card-visual {
@@ -561,7 +422,6 @@
 
   left: 9%;
 }
-
 
 /* Content */
 
@@ -573,7 +433,6 @@
   text-align: right;
 }
 
-
 /* Arrow */
 
 [dir="rtl"] .service-card-arrow {
@@ -581,7 +440,6 @@
 
   left: 32px;
 }
-
 
 /* Index */
 
@@ -591,23 +449,15 @@
   left: 42px;
 }
 
-
 /* Arrow direction */
 
-[dir="rtl"]
-.service-card-arrow span {
-  transform:
-    scaleX(-1);
+[dir="rtl"] .service-card-arrow span {
+  transform: scaleX(-1);
 }
 
-[dir="rtl"]
-.service-card:hover
-.service-card-arrow span {
-  transform:
-    scaleX(-1)
-    translateX(4px);
+[dir="rtl"] .service-card:hover .service-card-arrow span {
+  transform: scaleX(-1) translateX(4px);
 }
-
 
 /* =========================================================
    SCROLL INDICATOR
@@ -621,13 +471,9 @@
   left: 50%;
   bottom: 28px;
 
-  transform:
-    translateX(-50%);
+  transform: translateX(-50%);
 
-  width: min(
-    710px,
-    calc(100vw - 80px)
-  );
+  width: min(710px, calc(100vw - 80px));
 
   display: grid;
 
@@ -642,7 +488,6 @@
 
   pointer-events: none;
 }
-
 
 /* =========================================================
    CURRENT / TOTAL
@@ -664,15 +509,8 @@
 }
 
 .services-total {
-  color:
-    rgba(
-      255,
-      255,
-      255,
-      0.65
-    );
+  color: rgba(255, 255, 255, 0.65);
 }
-
 
 /* =========================================================
    PROGRESS BAR
@@ -684,13 +522,7 @@
   width: 100%;
   height: 2px;
 
-  background:
-    rgba(
-      255,
-      255,
-      255,
-      0.16
-    );
+  background: rgba(255, 255, 255, 0.16);
 
   overflow: hidden;
 }
@@ -706,15 +538,12 @@
 
   background: #fff;
 
-  transform-origin:
-    left center;
+  transform-origin: left center;
 
-  transform:
-    scaleX(0);
+  transform: scaleX(0);
 
   will-change: transform;
 }
-
 
 /* =========================================================
    SCROLL LABEL
@@ -726,8 +555,7 @@
   top: 18px;
   left: 50%;
 
-  transform:
-    translateX(-50%);
+  transform: translateX(-50%);
 
   display: flex;
 
@@ -745,13 +573,7 @@
 
   letter-spacing: 0.22em;
 
-  color:
-    rgba(
-      255,
-      255,
-      255,
-      0.55
-    );
+  color: rgba(255, 255, 255, 0.55);
 }
 
 .services-scroll-label i {
@@ -759,15 +581,8 @@
 
   font-style: normal;
 
-  color:
-    rgba(
-      255,
-      255,
-      255,
-      0.7
-    );
+  color: rgba(255, 255, 255, 0.7);
 }
-
 
 /* =========================================================
    TABLET
@@ -779,17 +594,11 @@
 
     left: 28px;
 
-    width:
-      calc(100vw - 56px);
+    width: calc(100vw - 56px);
   }
 
   .services-header h2 {
-    font-size:
-      clamp(
-        48px,
-        9vw,
-        76px
-      );
+    font-size: clamp(48px, 9vw, 76px);
   }
 
   .services-header p {
@@ -823,7 +632,6 @@
   }
 }
 
-
 /* =========================================================
    MOBILE
 ========================================================= */
@@ -834,17 +642,12 @@
 
     min-height: auto;
 
-    padding:
-      110px
-      20px
-      120px;
+    padding: 110px 20px 120px;
   }
 
   .services-grid {
-    background-size:
-      50px 50px;
+    background-size: 50px 50px;
   }
-
 
   /* Header */
 
@@ -860,12 +663,7 @@
   }
 
   .services-header h2 {
-    font-size:
-      clamp(
-        42px,
-        13vw,
-        64px
-      );
+    font-size: clamp(42px, 13vw, 64px);
 
     line-height: 0.95;
   }
@@ -876,7 +674,6 @@
     margin-top: 20px;
   }
 
-
   /* Sticky */
 
   .services-sticky {
@@ -886,7 +683,6 @@
 
     overflow: visible;
   }
-
 
   /* Track */
 
@@ -906,7 +702,6 @@
     transform: none !important;
   }
 
-
   /* Card */
 
   .service-card {
@@ -921,7 +716,6 @@
     border-radius: 22px;
   }
 
-
   /* Number */
 
   .service-number {
@@ -929,7 +723,6 @@
 
     left: 28px;
   }
-
 
   /* Visual */
 
@@ -946,7 +739,6 @@
     width: 48px;
     height: 48px;
   }
-
 
   /* Content */
 
@@ -972,7 +764,6 @@
     font-size: 14px;
   }
 
-
   /* Arrow */
 
   .service-card-arrow {
@@ -984,7 +775,6 @@
     height: 42px;
   }
 
-
   /* Index */
 
   .service-card-index {
@@ -992,7 +782,6 @@
 
     right: 28px;
   }
-
 
   /* Arabic */
 
@@ -1024,10 +813,154 @@
     left: 24px;
   }
 
-
   /* Indicator */
 
   .services-scroll-indicator {
     display: none;
   }
+}
+
+/* =========================================================
+   LIGHT MODE
+========================================================= */
+
+:root[data-theme="light"] .services {
+  background: var(--bg-primary);
+
+  color: var(--text-primary);
+}
+
+:root[data-theme="light"] .services-grid {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.06) 1px, transparent 1px);
+}
+
+:root[data-theme="light"] .services-label i {
+  background: var(--text-primary);
+}
+
+:root[data-theme="light"] .services-label span,
+:root[data-theme="light"] .services-header h2 {
+  color: var(--text-primary);
+}
+
+:root[data-theme="light"] .services-header p {
+  color: rgba(17, 17, 17, 0.68);
+}
+
+/* =========================================================
+   LIGHT MODE — CARDS
+========================================================= */
+
+:root[data-theme="light"] .service-card {
+  border-color: rgba(0, 0, 0, 0.14);
+
+  background:
+    radial-gradient(
+      circle at 100% 0%,
+      rgba(55, 60, 110, 0.08),
+      transparent 45%
+    ),
+    #ffffff;
+}
+
+:root[data-theme="light"] .service-card:hover {
+  border-color: rgba(0, 0, 0, 0.28);
+}
+
+:root[data-theme="light"] .service-number {
+  color: var(--text-primary);
+}
+
+/* =========================================================
+   LIGHT MODE — ICON
+========================================================= */
+
+:root[data-theme="light"] .service-card-visual {
+  border-color: rgba(0, 0, 0, 0.1);
+
+  background: radial-gradient(
+    circle,
+    rgba(0, 0, 0, 0.07),
+    rgba(0, 0, 0, 0.025) 55%,
+    transparent 72%
+  );
+
+  box-shadow: 0 0 80px rgba(0, 0, 0, 0.04);
+
+  color: rgba(17, 17, 17, 0.75);
+}
+
+:root[data-theme="light"] .service-card:hover .service-card-visual {
+  color: var(--text-primary);
+
+  background: radial-gradient(
+    circle,
+    rgba(0, 0, 0, 0.1),
+    rgba(0, 0, 0, 0.025) 55%,
+    transparent 72%
+  );
+}
+
+/* =========================================================
+   LIGHT MODE — CONTENT
+========================================================= */
+
+:root[data-theme="light"] .service-card-content h3 {
+  color: var(--text-primary);
+}
+
+:root[data-theme="light"] .service-card-content p {
+  color: rgba(17, 17, 17, 0.68);
+}
+
+/* =========================================================
+   LIGHT MODE — ARROW
+========================================================= */
+
+:root[data-theme="light"] .service-card-arrow {
+  border-color: rgba(0, 0, 0, 0.14);
+
+  color: var(--text-primary);
+}
+
+:root[data-theme="light"] .service-card:hover .service-card-arrow {
+  border-color: rgba(0, 0, 0, 0.28);
+}
+
+/* =========================================================
+   LIGHT MODE — INDEX
+========================================================= */
+
+:root[data-theme="light"] .service-card-index {
+  color: rgba(17, 17, 17, 0.25);
+}
+
+/* =========================================================
+   LIGHT MODE — SCROLL INDICATOR
+========================================================= */
+
+:root[data-theme="light"] .services-current {
+  color: var(--text-primary);
+}
+
+:root[data-theme="light"] .services-total {
+  color: rgba(17, 17, 17, 0.55);
+}
+
+:root[data-theme="light"] .services-progress {
+  background: rgba(0, 0, 0, 0.14);
+}
+
+:root[data-theme="light"] .services-progress span {
+  background: var(--text-primary);
+}
+
+:root[data-theme="light"] .services-scroll-label span {
+  color: rgba(17, 17, 17, 0.55);
+}
+
+:root[data-theme="light"] .services-scroll-label i {
+  color: rgba(17, 17, 17, 0.7);
 }
